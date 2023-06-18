@@ -1,0 +1,27 @@
+<%= button_to "Back", welcome_path, method: :get%>
+<h2>Show Repository</h2>
+<table class="table">
+    <tr>
+        <th>Repository Name</th>
+        <td><%= @repository.name %></td>
+    </tr>
+    <tr>
+        <th>Repository Description</th>
+        <td><%= @repository.description %></td>
+    </tr>
+    <tr>
+        <th>Repository Owner</th>
+        <td><% user = User.find(@repository.owner) %>
+        <%= user.email %></td>
+    </tr>
+    <tr>
+        <th>Repository Users</th>
+        <% @repository.users.each_with_index do |user,index| %>
+            <tr>
+                <td><%= index+1 %></td>
+                <td><%= user.email %></td>
+                </td>
+            </tr>
+        <% end %>
+    </tr>
+</table>

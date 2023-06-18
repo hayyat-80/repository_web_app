@@ -1,0 +1,20 @@
+<%= form_for repository do |f|%>
+    <%= f.label :name%><br>
+    <%= f.text_field :name%><br>
+    <% repository.errors.full_messages_for(:name).each do |message| %>
+        <div><%= message %></div>
+    <% end %>
+    <%= f.label :description%><br>
+    <%= f.text_field :description%><br>
+    <% repository.errors.full_messages_for(:description).each do |message| %>
+        <div><%= message %></div>
+    <% end %>
+    <%= f.hidden_field :owner, value:current_user.id %>
+    <% if @users %>
+        <%= f.label :users %>
+        <%= f.collection_select(:user_ids, @users, :id, :email,
+                                {include_blank: false, :include_hidden => false, :selected => @users.map(&:id)},
+                                {:multiple => true, :class => "admin-data-multi-select"}) %>
+    <% end %>
+    <%= f.submit %>
+<%end%>

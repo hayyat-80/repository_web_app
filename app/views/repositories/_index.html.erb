@@ -1,0 +1,26 @@
+<table class="table">
+    <tr class="header">
+        <th>Name</th>
+        <th>Description</th>
+        <th>Owner</th>
+    </tr>
+    <% repositories.each do |repository| %>
+    <tr>
+        <td><%= repository.name %></td>
+        <td><%= repository.description %></td>
+        <td><% user = User.find(repository.owner) %>
+        <%= link_to user.email, repository_path(:id => repository), method: :get %>
+        </td>
+        <td>
+            <%= link_to "Show", repository_path(repository) %>
+            <% user = User.find(repository.owner) %>
+            <% if current_user.email == user.email %>
+                <%= link_to "edit", edit_repository_path(repository) %>
+                <%= link_to "Destroy", repository_path(repository),
+                method: :delete,
+                data: { confirm: "Are you sure?" } %> 
+            <% end %>
+        </td>
+    </tr>
+    <% end %>
+</table>
